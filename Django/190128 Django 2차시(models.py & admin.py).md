@@ -1,3 +1,15 @@
+# 정리
+
+* models.py : 테이블을 하나의 클래스로 정의함
+* admins.py : 정의된 테이블이 Admin 화면에 보이게 함
+* python manage.py makemigrations : 데이터베이스에 변경이 필요한 사항을 추출함
+* python manage.py migrate : 데이터베이스에 변경사항을 반영함
+* python manage.py runserver : 현재까지 작업을 개발용 웹 서버로 확인함
+
+<hr></hr>
+
+
+
 게시글 작성하는 페이지 만들기
 
 -  posts 라는 앱 만들기
@@ -9,14 +21,16 @@
 * app 등록하기 (settings.py)
 
   ```python
-  INSTALLED_APPS = [ 'posts.apps.PostsConfig',]
+  INSTALLED_APPS = [ 'posts.apps.PostsConfig',]   # posts 라는 앱폴더 內 apps.py 內 PostsConfig 클래스 의미
   ```
 
 
 
 posts/models.py 열기
 
-* 테이블 만들기
+* 테이블 만들기 : <span style="color:red">django.db.models.Model 클래스를 상속</span>받아  테이블을 하나의 class 로 정의
+
+  ​			   테이블의 열은 클래스의 변수(속성)
 
   ![](D:\집.타이포라\Django\장고 이미지\제목 없음.png)
 
@@ -25,8 +39,11 @@ posts/models.py 열기
   
   # Create your models here.
   class Post(models.Model):       # models = 첫 줄에서 import 한 models
-      title = models.CharField(max_laength=100)   # max_length 무조건 필수 (100자 길이제한)
+      title = models.CharField(max_length=100)   # max_length 무조건 필수 (100자 길이제한)
       content = models.TextField()
+      
+      
+      ### 💘 즉, Post 라는 표에, 1열은 title 이고, 2열은 content
   ```
 
 * 실제 데이터 베이스에 적용하기 위해서 bash에  명령어 치기 
@@ -56,8 +73,9 @@ posts/models.py 열기
   ```bash
   # Create
   
-  >>> from posts.models import Post
-  >>> post = Post(title='hello', content='world!')  # 여기서 끝내면 아무것도 x save 까지 해야 함
+  >>> from posts.models import Post  # posts 폴더 內 models.py 파일에서 Post 클래스를 import 해
+  >>> post = Post(title='hello', content='world!')  # 여기서 끝내면 아무것도 x save 까지 해야 함  
+  								# Post 테이블에, 내용 넣을 거임
   >>> post
   <Post: Post object (None)>
   >>> post.title
@@ -236,7 +254,7 @@ urlpatterns = [
 from django.contrib import admin
 from .models import Post
 
-admin.site.register(Post)    # 관리자 페이지 기본 형태
+admin.site.register(Post)    # 관리자 페이지 기본 형태  # Post 테이블을 등록해
 ```
 
 ![](D:\집.타이포라\Django\장고 이미지\제목 없음3.png)
@@ -332,7 +350,7 @@ class student(models.Model):
     birthday = models.DateField()
     age = models.IntegerField()
     
-    def __str__(self):
+    def __str__(self):  # 객체를 문자열로 표현할 때 사용하는 함수.
         return self.name
 ```
 
