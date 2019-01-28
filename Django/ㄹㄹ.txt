@@ -1,0 +1,9 @@
+git remote set-url origin https://lab.ssafy.com/myccpb08/homeworkshop.git
+경로 바꿔서 push 할 때
+
+
+
+깃랩이랑 깃헙 2군데 올릴 때
+그냥 git push 하고
+git push github master 또 치면
+두 군데 올라감
